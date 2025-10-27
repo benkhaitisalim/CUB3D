@@ -1,4 +1,5 @@
 # CUB3D
+<<<<<<< HEAD
 
 A Wolfenstein-style raycasting engine in C powered by MiniLibX. This repo contains two deliverables:
 
@@ -173,3 +174,5 @@ Bonus: adds mouse look, minimap, animated doors, HUD gun.
 ## License
 
 Educational project. Textures in pics/ are provided for development/testing.
+=======
+>>>>>>> 1606eed1b3e6f2f8813040df21f61d2291d1906e

@@ -1,5 +1,4 @@
 # CUB3D
-<<<<<<< HEAD
 
 A Wolfenstein-style raycasting engine in C powered by MiniLibX. This repo contains two deliverables:
 

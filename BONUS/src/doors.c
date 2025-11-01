@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   doors.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bsalim <bsalim@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/31 23:07:11 by bsalim            #+#    #+#             */
+/*   Updated: 2025/10/31 23:07:14 by bsalim           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../cub3d.h"
 #include "parse.h"
@@ -142,8 +153,7 @@ void	dda_algo(t_game *game, t_ray *ray)
 			ray->map_y += ray->step_y;
 			ray->side = 1;
 		}
-		if (ray->map_y >= 0 && ray->map_y < game->map->height
-			&& ray->map_x >= 0
+		if (ray->map_y >= 0 && ray->map_y < game->map->height && ray->map_x >= 0
 			&& ray->map_x < (int)strlen(game->map->map_data[ray->map_y]))
 		{
 			check = game->map->map_data[ray->map_y][ray->map_x];
@@ -209,6 +219,8 @@ void	move_player_fb(t_game *game, int direction)
 {
 	double	new_x;
 	double	new_y;
+	double	buffer_x;
+	double	buffer_y;
 
 	if (direction == 1)
 	{
@@ -220,9 +232,17 @@ void	move_player_fb(t_game *game, int direction)
 		new_x = game->player->pos_x - game->player->dir_x * MOVE_SPEED;
 		new_y = game->player->pos_y - game->player->dir_y * MOVE_SPEED;
 	}
-	if (is_valid_pos_with_doors(game, game->map, new_x, game->player->pos_y))
+	if (new_x > game->player->pos_x)
+		buffer_x = new_x + COLLISION_BUFFER;
+	else
+		buffer_x = new_x - COLLISION_BUFFER;
+	if (new_y > game->player->pos_y)
+		buffer_y = new_y + COLLISION_BUFFER;
+	else
+		buffer_y = new_y - COLLISION_BUFFER;
+	if (is_valid_position(game->map, buffer_x, game->player->pos_y))
 		game->player->pos_x = new_x;
-	if (is_valid_pos_with_doors(game, game->map, game->player->pos_x, new_y))
+	if (is_valid_position(game->map, game->player->pos_x, buffer_y))
 		game->player->pos_y = new_y;
 }
 
@@ -230,6 +250,8 @@ void	move_player_lf(t_game *game, int direction)
 {
 	double	new_x;
 	double	new_y;
+	double	buffer_x;
+	double	buffer_y;
 
 	if (direction == 1)
 	{
@@ -241,9 +263,17 @@ void	move_player_lf(t_game *game, int direction)
 		new_x = game->player->pos_x + game->player->plane_x * MOVE_SPEED;
 		new_y = game->player->pos_y + game->player->plane_y * MOVE_SPEED;
 	}
-	if (is_valid_pos_with_doors(game, game->map, new_x, game->player->pos_y))
+	if (new_x > game->player->pos_x)
+		buffer_x = new_x + COLLISION_BUFFER;
+	else
+		buffer_x = new_x - COLLISION_BUFFER;
+	if (new_y > game->player->pos_y)
+		buffer_y = new_y + COLLISION_BUFFER;
+	else
+		buffer_y = new_y - COLLISION_BUFFER;
+	if (is_valid_position(game->map, buffer_x, game->player->pos_y))
 		game->player->pos_x = new_x;
-	if (is_valid_pos_with_doors(game, game->map, game->player->pos_x, new_y))
+	if (is_valid_position(game->map, game->player->pos_x, buffer_y))
 		game->player->pos_y = new_y;
 }
 
@@ -286,16 +316,18 @@ int	load_door_texture(t_game *game, char *door_texture_path)
 {
 	printf("Trying to load door texture: %s\n", door_texture_path);
 	game->door_texture.img = mlx_xpm_file_to_image(game->mlx_data->mlx,
-			door_texture_path, &game->door_texture.width,
-			&game->door_texture.height);
+													door_texture_path,
+													&game->door_texture.width,
+													&game->door_texture.height);
 	if (!game->door_texture.img)
 	{
 		printf("Failed to load door texture from: %s\n", door_texture_path);
 		return (0);
 	}
 	game->door_texture.addr_mem = mlx_get_data_addr(game->door_texture.img,
-			&game->door_texture.bpp,
-			&game->door_texture.len_line, &game->door_texture.endian);
+													&game->door_texture.bpp,
+													&game->door_texture.len_line,
+													&game->door_texture.endian);
 	if (!game->door_texture.addr_mem)
 	{
 		printf("Failed to get door texture data\n");
@@ -304,6 +336,7 @@ int	load_door_texture(t_game *game, char *door_texture_path)
 		return (0);
 	}
 	printf("SUCCESS: Door texture loaded (%dx%d)\n",
-		game->door_texture.width, game->door_texture.height);
+			game->door_texture.width,
+			game->door_texture.height);
 	return (1);
 }

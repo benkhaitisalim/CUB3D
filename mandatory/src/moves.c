@@ -1,10 +1,37 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   moves.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bsalim <bsalim@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/30 23:30:10 by taya              #+#    #+#             */
+/*   Updated: 2025/10/31 22:15:21 by bsalim           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../cub3d.h"
 
+void	calculate_buffer(t_game *game, double new_x, double new_y,
+		t_collision *collision)
+{
+	collision->new_x = new_x;
+	collision->new_y = new_y;
+	if (new_x > game->player->pos_x)
+		collision->buffer_x = new_x + COLLISION_BUFFER;
+	else
+		collision->buffer_x = new_x - COLLISION_BUFFER;
+	if (new_y > game->player->pos_y)
+		collision->buffer_y = new_y + COLLISION_BUFFER;
+	else
+		collision->buffer_y = new_y - COLLISION_BUFFER;
+}
+
 void	move_player_fb(t_game *game, int direction)
 {
-	double	new_x;
-	double	new_y;
+	double		new_x;
+	double		new_y;
+	t_collision	collision;
 
 	if (direction == 1)
 	{
@@ -16,16 +43,18 @@ void	move_player_fb(t_game *game, int direction)
 		new_x = game->player->pos_x - game->player->dir_x * MOVE_SPEED;
 		new_y = game->player->pos_y - game->player->dir_y * MOVE_SPEED;
 	}
-	if (is_valid_position(game->map, new_x, game->player->pos_y))
-		game->player->pos_x = new_x;
-	if (is_valid_position(game->map, game->player->pos_x, new_y))
-		game->player->pos_y = new_y;
+	calculate_buffer(game, new_x, new_y, &collision);
+	if (is_valid_position(game->map, collision.buffer_x, game->player->pos_y))
+		game->player->pos_x = collision.new_x;
+	if (is_valid_position(game->map, game->player->pos_x, collision.buffer_y))
+		game->player->pos_y = collision.new_y;
 }
 
 void	move_player_lf(t_game *game, int direction)
 {
-	double	new_x;
-	double	new_y;
+	double		new_x;
+	double		new_y;
+	t_collision	collision;
 
 	if (direction == 1)
 	{
@@ -37,10 +66,11 @@ void	move_player_lf(t_game *game, int direction)
 		new_x = game->player->pos_x + game->player->plane_x * MOVE_SPEED;
 		new_y = game->player->pos_y + game->player->plane_y * MOVE_SPEED;
 	}
-	if (is_valid_position(game->map, new_x, game->player->pos_y))
-		game->player->pos_x = new_x;
-	if (is_valid_position(game->map, game->player->pos_x, new_y))
-		game->player->pos_y = new_y;
+	calculate_buffer(game, new_x, new_y, &collision);
+	if (is_valid_position(game->map, collision.buffer_x, game->player->pos_y))
+		game->player->pos_x = collision.new_x;
+	if (is_valid_position(game->map, game->player->pos_x, collision.buffer_y))
+		game->player->pos_y = collision.new_y;
 }
 
 void	rotate_player(t_game *game, int direction)

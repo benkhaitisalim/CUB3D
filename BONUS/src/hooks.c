@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   hooks.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bsalim <bsalim@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/31 23:06:41 by bsalim            #+#    #+#             */
+/*   Updated: 2025/11/01 10:15:01 by bsalim           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../cub3d.h"
 
@@ -22,10 +33,6 @@ int	key_press(int keycode, t_game *game)
 		game->keys.left = 1;
 	else if (keycode == KEY_SPACE)
 		game->player->shooting = 1;
-	else
-	{
-		printf("key :%d\n", keycode);
-	}
 	return (0);
 }
 
@@ -76,8 +83,8 @@ int	mouse_move(int x, int y, t_game *game)
 	game->keys.mouse_x = x;
 	if (x < 10 || x > SCREEN_WIDTH - 10)
 	{
-		mlx_mouse_move(game->mlx_data->win, SCREEN_WIDTH / 2,
-		SCREEN_HEIGHT / 2);
+		mlx_mouse_move(game->mlx_data->win,
+			SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
 		game->keys.mouse_x = SCREEN_WIDTH / 2;
 	}
 	return (0);

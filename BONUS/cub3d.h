@@ -6,7 +6,7 @@
 /*   By: bsalim <bsalim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 17:32:16 by taya              #+#    #+#             */
-/*   Updated: 2025/10/27 00:11:01 by bsalim           ###   ########.fr       */
+/*   Updated: 2025/11/01 10:12:02 by bsalim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,12 @@
 # define SCREEN_MINI_H 20
 # define MIN_MAP 29
 # define PIXEL_SIZE 10
+#define COLLISION_BUFFER 0.2
+#define MINIMAP_WIDTH 100  
+#define MINIMAP_HEIGHT 100 
+#define MINIMAP_X 10     
+#define MINIMAP_Y 10
+#define TILE_SIZE 8 
 
 typedef struct s_texture_check
 {
@@ -268,9 +274,9 @@ void	cleanup_game(t_game *game,
 					t_img *img,
 					t_map *map);
 void	free_map_data(t_map *map);
-void			draw_mini_map(t_game *game, t_var5 *var);
-void			chose_color(t_var5 *var, t_game *game);
-void			draw_mini_map(t_game *game, t_var5 *var);
+// void			draw_mini_map(t_game *game, t_var5 *var);
+// void			chose_color(t_var5 *var, t_game *game);
+// void			draw_mini_map(t_game *game, t_var5 *var);
 void			chose_color(t_var5 *var, t_game *game);
 void			draw_player_minimap(t_game *game);
 
@@ -288,4 +294,21 @@ void			free_doors(t_game *game);
 int				load_door_texture(t_game *game, char *door_texture_path);
 int				mouse_move(int x, int y, t_game *game);
 void			draw_gun(t_game *game);
+void			draw_minimap_background(t_game *game);
+void			draw_mini_map(t_game *game, t_var5 *var, int offset_x, int offset_y);
+void			chose_color(t_var5 *var, t_game *game);
+void			draw_player_centered(t_game *game);
+char			*derive_base_dir(const char *av);
+int				to_the_next_word(char *line, t_var3 *var);
+int				parse_floor_color(t_var3 *var, char c, t_map *store);
+int				parse_celing_color(t_var3 *var, char c, t_map *store);
+int				copy_double_arr(t_map *map, t_var_check *var);
+int				find_player_position1(char **map, int pos[2], int height);
+int				ft_check_start_map(t_var_check *var);
+int				ft_check_end_map(t_var_check *var, t_map *map);
+int				load_punch_texture(t_game *game);
+int				load_east_texture(t_game *game);
+int				load_west_texture(t_game *game);
+int				load_south_texture(t_game *game);
+int				load_north_texture(t_game *game);
 #endif

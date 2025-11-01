@@ -6,10 +6,9 @@
 /*   By: bsalim <bsalim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 00:15:40 by bsalim            #+#    #+#             */
-/*   Updated: 2025/10/27 00:17:41 by bsalim           ###   ########.fr       */
+/*   Updated: 2025/10/31 22:39:00 by bsalim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "../cub3d.h"
 #include "parse.h"
@@ -79,8 +78,7 @@ int	parse_celing_color(t_var3 *var, char c, t_map *store)
 	return (0);
 }
 
-int	to_the_next_word(char *line,
-						t_var3 *var)
+int	to_the_next_word(char *line, t_var3 *var)
 {
 	var->index = 0;
 	while (line[var->i + var->index] && ft_isdigit(line[var->i + var->index]))
@@ -100,62 +98,4 @@ int	to_the_next_word(char *line,
 		var->index++;
 	var->color++;
 	return (var->index);
-}
-
-int	ft_split_number(t_map *store, char *line, char c)
-{
-	t_var3	var;
-
-	var.numbers = 0;
-	var.i = 0;
-	while (line[var.i])
-	{
-		while (line[var.i] && !ft_isdigit(line[var.i]))
-			var.i++;
-		if (line[var.i])
-		{
-			var.numbers++;
-			while (line[var.i] && ft_isdigit(line[var.i]))
-				var.i++;
-		}
-	}
-	var.tmp = malloc(sizeof(char *) * (var.numbers + 1));
-	if (!var.tmp)
-		return (1);
-	var.color = 0;
-	var.i = 0;
-	while (line[var.i])
-	{
-		while (line[var.i] && ft_isspace(line[var.i]))
-			var.i++;
-		if (line[var.i])
-		{
-			var.i += to_the_next_word(line, &var);
-			if (var.i == 1 && !var.tmp[var.color - 1])
-			{
-				while (var.color > 0)
-					free(var.tmp[--var.color]);
-				free(var.tmp);
-				return (1);
-			}
-		}
-		var.i++;
-	}
-	var.tmp[var.color] = NULL;
-	if (parse_floor_color(&var, c, store) != 0)
-	{
-		while (var.color > 0)
-			free(var.tmp[--var.color]);
-		free(var.tmp);
-		return (1);
-	}
-	if (parse_celing_color(&var, c, store) != 0)
-	{
-		while (var.color > 0)
-			free(var.tmp[--var.color]);
-		free(var.tmp);
-		return (1);
-	}
-	free(var.tmp);
-	return (0);
 }

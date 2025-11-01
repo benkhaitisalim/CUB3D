@@ -6,11 +6,9 @@
 /*   By: bsalim <bsalim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 00:15:15 by bsalim            #+#    #+#             */
-/*   Updated: 2025/10/27 00:15:16 by bsalim           ###   ########.fr       */
+/*   Updated: 2025/10/31 22:14:45 by bsalim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-
 
 #include "../cub3d.h"
 #include "parse.h"
@@ -51,7 +49,7 @@ int	drain_after_map(int fd)
 	return (0);
 }
 
-int	process_map_row(t_map *map, char *line, int *capacity, int *row)
+int	process_map(t_map *map, char *line, int *capacity, int *row)
 {
 	t_var1	variable;
 
@@ -100,6 +98,9 @@ static int	handle_header_line(t_map *map, char *line, int i, int *before_map)
 
 int	parse_split(t_map *map, int *capacity, int *row, t_var *variable)
 {
+	int	s;
+
+	s = 0;
 	if (variable->before_map)
 	{
 		if (handle_header_line(map, variable->line, variable->i,
@@ -110,21 +111,15 @@ int	parse_split(t_map *map, int *capacity, int *row, t_var *variable)
 		}
 		if (!variable->before_map)
 		{
-			int s = skip_space(variable->line);
+			s = skip_space(variable->line);
 			if (variable->line[s] != '\0')
 			{
-				if (process_map_row(map, variable->line, capacity, row) != 0)
-				{
-					free(variable->line);
-					return (1);
-				}
+				if (process_map(map, variable->line, capacity, row) != 0)
+					return (free(variable->line), 1);
 			}
 		}
 	}
-	else if (process_map_row(map, variable->line, capacity, row) != 0)
-	{
-		free(variable->line);
-		return (1);
-	}
+	else if (process_map(map, variable->line, capacity, row) != 0)
+		return (free(variable->line), 1);
 	return (0);
 }

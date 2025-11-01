@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_utls_2.c                                     :+:      :+:    :+:   */
+/*   parse_utils2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bsalim <bsalim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/19 18:50:07 by bsalim            #+#    #+#             */
-/*   Updated: 2025/10/27 00:18:19 by bsalim           ###   ########.fr       */
+/*   Created: 2025/10/27 00:15:20 by bsalim            #+#    #+#             */
+/*   Updated: 2025/10/31 22:51:56 by bsalim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,46 +82,4 @@ void	allocate_map(t_map *map, t_var1 variable, int *row, int *capacity)
 		map->map_data = variable.tmp;
 		*capacity = variable.new_cap;
 	}
-}
-
-
-int	set_texture_if_match(t_map *map, char *line, int i)
-{
-	char	**target;
-
-	target = NULL;
-	if ((line[i] == 'N' || line[i] == 'n')
-		&& (line[i + 1] == 'O' || line[i + 1] == 'o')
-		&& ft_isspace(line[i + 2]))
-	{
-		target = &map->no_textures;
-		map->count.no++;
-	}
-	else if ((line[i] == 'S' || line[i] == 's')
-		&& (line[i + 1] == 'O' || line[i + 1] == 'o')
-		&& ft_isspace(line[i + 2]))
-	{
-		target = &map->so_textures;
-		map->count.so++;
-	}
-	else if ((line[i] == 'W' || line[i] == 'w')
-		&& (line[i + 1] == 'E' || line[i + 1] == 'e')
-		&& ft_isspace(line[i + 2]))
-	{
-		target = &map->we_textures;
-		map->count.ea++;
-	}
-	else if ((line[i] == 'E' || line[i] == 'e')
-		&& (line[i + 1] == 'A' || line[i + 1] == 'a')
-		&& ft_isspace(line[i + 2]))
-	{
-		target = &map->ea_textures;
-		map->count.we++;
-	}
-	if (target == NULL)
-		return (-1);
-	*target = ft_get_texture(line);
-	if (*target == NULL)
-		return (1);
-	return (0);
 }

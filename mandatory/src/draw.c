@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   draw.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bsalim <bsalim@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/30 23:27:56 by taya              #+#    #+#             */
+/*   Updated: 2025/10/31 22:17:43 by bsalim           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../cub3d.h"
 
@@ -22,11 +33,11 @@ void	draw_floor_ceiling(t_game *game)
 		while (x < SCREEN_WIDTH)
 		{
 			if (y < SCREEN_HEIGHT / 2)
-				color = (game->map->celing.r << 16
+				color = (game->map->celing.r << 16 
 						| game->map->celing.g << 8 | game->map->celing.b);
 			else
-				color = (game->map->flor.r << 16
-						| game->map->flor.g << 8 | game->map->flor.b);
+				color = (game->map->flor.r << 16 | game->map->flor.g << 8 
+						| game->map->flor.b);
 			put_pixel_to_image(game->img, x, y, color);
 			x++;
 		}

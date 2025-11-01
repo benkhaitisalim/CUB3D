@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   coord.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bsalim <bsalim@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/31 00:39:43 by taya              #+#    #+#             */
+/*   Updated: 2025/10/31 23:07:43 by bsalim           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../cub3d.h"
 
@@ -98,10 +109,10 @@ int	init_player(t_player *player, t_map *map, t_mlx_data *data)
 		return (1);
 	if (!find_player_direction(map->map_data, &player->dir_x, &player->dir_y))
 		return (2);
-	set_camera_plane(player->dir_x, player->dir_y,
-		&player->plane_x, &player->plane_y);
-	data->win = mlx_new_window(data->mlx, SCREEN_WIDTH,
-			SCREEN_HEIGHT, "Cube3D - Treasure Hunt");
+	set_camera_plane(player->dir_x, player->dir_y, &player->plane_x,
+		&player->plane_y);
+	data->win = mlx_new_window(data->mlx,
+			SCREEN_WIDTH, SCREEN_HEIGHT, "Cube3D");
 	if (!data->win)
 		return (1);
 	return (0);

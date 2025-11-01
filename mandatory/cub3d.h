@@ -6,7 +6,7 @@
 /*   By: bsalim <bsalim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 00:15:30 by bsalim            #+#    #+#             */
-/*   Updated: 2025/10/27 00:15:31 by bsalim           ###   ########.fr       */
+/*   Updated: 2025/10/31 22:44:48 by bsalim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@
 # define KEY_RIGHT 124
 # define KEY_SPACE 49
 # define KEY_ESC 53
+# define COLLISION_BUFFER 0.2
 # define MOVE_SPEED 0.08
 # define ROT_SPEED 0.05
 
@@ -52,6 +53,16 @@ typedef struct s_var_check
 	int			count_color;
 }				t_var_check;
 
+typedef struct s_var_check_player 
+{
+	int i;
+    int j;
+    int flag;
+    int skip;
+    int len;
+	int idx;
+	
+}t_var_check_player;
 typedef struct s_texture_check
 {
     int no;
@@ -116,6 +127,14 @@ typedef struct s_mlx_data
 	t_img		*img;
 	void		*win;
 }				t_mlx_data;
+
+typedef struct s_collision
+{
+	double			new_x;
+	double			new_y;
+	double			buffer_x;
+	double			buffer_y;
+}					t_collision;
 
 typedef struct s_texture
 {
@@ -206,76 +225,104 @@ typedef struct s_ray
 	double		tex_pos;
 	int			tex_num;
 }				t_ray;
-int				initialization_map(t_map *map, int fd, char *av);
-char			*get_next_line(int fd);
-void			draw_floor_ceiling(t_game *game);
-void			draw_walls(t_game *game);
-int				create_win(t_mlx_data *data, t_img *img);
-void			put_pixel_to_image(t_img *img, int x, int y, int color);
-void			init_player_var(t_player *player);
-int				find_player_position(char **map, double *pos_x, double *pos_y);
-int				find_player_direction(char **map, double *dir_x, double *dir_y);
-void			set_camera_plane(double dir_x, double dir_y, double *plane_x,
-					double *plane_y);
-int				is_valid_position(t_map *map, double x, double y);
-void			move_player_fb(t_game *game, int direction);
-void			move_player_lf(t_game *game, int direction);
-void			rotate_player(t_game *game, int direction);
-int				key_press(int keycode, t_game *game);
-int				close_window(t_game *game);
-void			init_rays(t_ray *rays);
-void			recasting(t_game *game, t_ray *ray, int x);
-void			dda_algo(t_game *game, t_ray *ray);
-void			wall_height(t_game *game, t_ray *ray);
-t_texture		*get_wall_texture(t_game *game, t_ray *ray);
-void			draw_vertical_line(t_game *game, int x, t_ray *ray);
-void			draw_3d(t_game *game);
-int				init_textures(t_game *game);
-int				skip_space(char *line);
-void			free_textures(t_game *game);
-int				game_loop(t_game *game);
-int				key_release(int keycode, t_game *game);
-void			init_keys(t_game *game);
-int				is_map_char(char c);
-int				is_player_char(char c);
-int				ft_isspace(char c);
-int				skip_space(char *line);
-int				init_mlx_data(t_mlx_data *data);
-void			free_double_arr(char **arr);
-int				init_map(t_map *map);
-int				parse_map(t_map *map, int fd);
-char			*ft_get_texture(char *input);
-int				find_color_and_parse_them(t_map *map, char *line, char c);
-int				check_diagonal(char *input);
+int					initialization_map(t_map *map, int fd, char *av);
+char				*get_next_line(int fd);
+void				draw_floor_ceiling(t_game *game);
+void				draw_walls(t_game *game);
+int					create_win(t_mlx_data *data, t_img *img);
+void				put_pixel_to_image(t_img *img, int x, int y, int color);
+void				init_player_var(t_player *player);
+int					find_player_position(char **map, double *pos_x,
+						double *pos_y);
+int					find_player_direction(char **map, double *dir_x,
+						double *dir_y);
+void				set_camera_plane(double dir_x, double dir_y,
+						double *plane_x, double *plane_y);
+int					is_valid_position(t_map *map, double x, double y);
+void				move_player_fb(t_game *game, int direction);
+void				move_player_lf(t_game *game, int direction);
+void				rotate_player(t_game *game, int direction);
+int					key_press(int keycode, t_game *game);
+int					close_window(t_game *game);
+void				init_rays(t_ray *rays);
+void				recasting(t_game *game, t_ray *ray, int x);
+void				dda_algo(t_game *game, t_ray *ray);
+void				wall_height(t_game *game, t_ray *ray);
+t_texture			*get_wall_texture(t_game *game, t_ray *ray);
+void				draw_vertical_line(t_game *game, int x, t_ray *ray);
+void				draw_3d(t_game *game);
+int					init_textures(t_game *game);
+int					skip_space(char *line);
+void				free_textures(t_game *game);
+int					game_loop(t_game *game);
+int					key_release(int keycode, t_game *game);
+void				init_keys(t_game *game);
+int					is_map_char(char c);
+int					is_player_char(char c);
+int					ft_isspace(char c);
+int					skip_space(char *line);
+int					init_mlx_data(t_mlx_data *data);
+void				free_double_arr(char **arr);
+int					init_map(t_map *map);
+int					parse_map(t_map *map, int fd);
+char				*ft_get_texture(char *input);
+int					find_color_and_parse_them(t_map *map, char *line, char c);
+int					check_diagonal(char *input);
 
-void			*xrealloc(void *ptr, size_t new_count, size_t elem);
-int				validate_map(t_map *map);
-int				error(char *msg);
-int				ft_split_number(t_map *store, char *line, char c);
-int				ft_word(char *line);
-void			mlx_hooks_setup(t_game *game);
-int				setup_map(t_map **map, char *filename);
-int				setup_player(t_player **player, t_map *map, t_mlx_data *data);
-int				setup_image(t_img **img, t_mlx_data *data);
-t_game			*setup_game(t_mlx_data *data, t_map *map, t_player *player,
-					t_img *img);
-int				init_player(t_player *player, t_map *map, t_mlx_data *data);
+void				*xrealloc(void *ptr, size_t new_count, size_t elem);
+int					validate_map(t_map *map);
+int					error(char *msg);
+int					ft_split_number(t_map *store, char *line, char c);
+int					ft_word(char *line);
+void				mlx_hooks_setup(t_game *game);
+int					setup_map(t_map **map, char *filename);
+int					setup_player(t_player **player, t_map *map,
+						t_mlx_data *data);
+int					setup_image(t_img **img, t_mlx_data *data);
+t_game				*setup_game(t_mlx_data *data, t_map *map, t_player *player,
+						t_img *img);
+int					init_player(t_player *player, t_map *map, t_mlx_data *data);
 void	cleanup_game(t_game *game,
 					t_player *player,
 					t_img *img,
 					t_map *map);
+float				distance_calcul(float x1, float y1, float x2, float y2);
+void				parsing_doors(t_game *game, t_map *map);
+void				update_door(t_game *game);
+int					is_door(t_game *game, int x, int y);
+int					door_passable(t_game *game, int door_index);
+void				dda_algo(t_game *game, t_ray *ray);
+int					is_valid_pos_with_doors(t_game *game, t_map *map, double x,
+						double y);
+void				move_player_fb(t_game *game, int direction);
+void				move_player_lf(t_game *game, int direction);
+void				free_doors(t_game *game);
+int					load_door_texture(t_game *game, char *door_texture_path);
+int					mouse_move(int x, int y, t_game *game);
+char				*derive_base_dir(const char *av);
+int					to_the_next_word(char *line, t_var3 *var);
+int					parse_floor_color(t_var3 *var, char c, t_map *store);
+int					parse_celing_color(t_var3 *var, char c, t_map *store);
+int					ft_check_end_map(t_var_check *var, t_map *map);
+int					ft_check_start_map(t_var_check *var);
+int					find_player_position1(char **map, int pos[2], int height);
+int					ft_check_player(t_var_check *var);
+int					copy_double_arr(t_map *map, t_var_check *var);
+int					check_space_near_zero(char **map, int i, int idx, int len);
+int					check_player_space_below(char **map, int i, int idx,
+						int height);
+int					process_row_chars(char **map, int i, int pos[2],
+						int height);
+int					validate_player_flag(int flag);
+int					find_player_position1(char **map, int pos[2], int height);
+int					check_last_line(t_var_check *var, int i);
+int					check_line_ends_with_wall(char *line);
 
-float			distance_calcul(float x1, float y1, float x2, float y2);
-void			parsing_doors(t_game *game, t_map *map);
-void			update_door(t_game *game);
-int				is_door(t_game *game, int x, int y);
-int				door_passable(t_game *game, int door_index);
-void			dda_algo(t_game *game, t_ray *ray);
-int				is_valid_pos_with_doors(t_game *game, t_map *map, double x,
-					double y);
-void			move_player_fb(t_game *game, int direction);
-void			move_player_lf(t_game *game, int direction);
-void			free_doors(t_game *game);
-int				load_door_texture(t_game *game, char *door_texture_path);
-int				mouse_move(int x, int y, t_game *game);
+int					check_first_line(t_var_check *var);
+int					ft_check_start_map(t_var_check *var);
+int					validate_textures(t_map *map, t_var_check *var);
+int					validate_map_chars(t_map *map);
+int					validate_map(t_map *map);
+
+
 #endif

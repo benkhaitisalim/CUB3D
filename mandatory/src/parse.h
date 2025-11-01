@@ -6,7 +6,7 @@
 /*   By: bsalim <bsalim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 00:18:06 by bsalim            #+#    #+#             */
-/*   Updated: 2025/10/27 00:18:07 by bsalim           ###   ########.fr       */
+/*   Updated: 2025/10/31 22:15:06 by bsalim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ typedef struct s_var4
 	int					words;
 	int					fill;
 }						t_var4;
-
 
 char					*found_the_parse_value(char *line);
 char					**my_split(char *input);

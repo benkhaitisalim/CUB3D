@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   draw.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bsalim <bsalim@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/31 15:34:15 by taya              #+#    #+#             */
+/*   Updated: 2025/11/01 10:14:09 by bsalim           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../cub3d.h"
 #include "parse.h"
@@ -5,9 +16,14 @@
 void	draw_3d(t_game *game)
 {
 	t_var5	var;
+	int		offset_x;
+	int		offset_y;
 
 	draw_floor_ceiling(game);
 	draw_walls(game);
+	offset_x = (int)(game->player->pos_x * TILE_SIZE) - (MINIMAP_WIDTH / 2);
+	offset_y = (int)(game->player->pos_y * TILE_SIZE) - (MINIMAP_HEIGHT / 2);
+	draw_minimap_background(game);
 	var.mi = 0;
 	while (game->map->map_data[var.mi])
 	{
@@ -15,16 +31,13 @@ void	draw_3d(t_game *game)
 		while (game->map->map_data[var.mi][var.mj])
 		{
 			chose_color(&var, game);
-			draw_mini_map(game, &var);
+			draw_mini_map(game, &var, offset_x, offset_y);
 			var.mj++;
 		}
 		var.mi++;
 	}
-	var.mi = (int)game->player->pos_y;
-	var.mj = (int)game->player->pos_x;
-	var.color = 0xFF0000;
+	draw_player_centered(game);
 	draw_gun(game);
-	draw_mini_map(game, &var);
 	mlx_put_image_to_window(game->mlx_data->mlx,
 		game->mlx_data->win, game->img->img, 0, 0);
 }

@@ -6,54 +6,48 @@
 /*   By: bsalim <bsalim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 00:18:52 by bsalim            #+#    #+#             */
-/*   Updated: 2025/10/27 00:18:53 by bsalim           ###   ########.fr       */
+/*   Updated: 2025/10/31 22:31:56 by bsalim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "../cub3d.h"
 
-void free_double_arr(char **arr)
+void	free_double_arr(char **arr)
 {
-    int i;
+	int	i;
 
-    if (!arr)
-        return;
-    i = 0;
-    while (arr[i])
-    {
-        free(arr[i]);
-        i++;
-    }
-    free(arr);
+	if (!arr)
+		return ;
+	i = 0;
+	while (arr[i])
+	{
+		free(arr[i]);
+		i++;
+	}
+	free(arr);
 }
 
-void free_map_data(t_map *map)
+void	free_map_data(t_map *map)
 {
-    if (!map)
-        return;
-
-    free_double_arr(map->map_data);
-    map->map_data = NULL;
-
-    free(map->no_textures);
-    free(map->so_textures);
-    free(map->we_textures);
-    free(map->ea_textures);
-
-    map->no_textures = NULL;
-    map->so_textures = NULL;
-    map->we_textures = NULL;
-    map->ea_textures = NULL;
-
-    if (map->textur)
-    {
-        free(map->textur);
-        map->textur = NULL;
-    }
-
-    map->height = 0;
-    map->width = 0;
+	if (!map)
+		return ;
+	free_double_arr(map->map_data);
+	map->map_data = NULL;
+	free(map->no_textures);
+	free(map->so_textures);
+	free(map->we_textures);
+	free(map->ea_textures);
+	map->no_textures = NULL;
+	map->so_textures = NULL;
+	map->we_textures = NULL;
+	map->ea_textures = NULL;
+	if (map->textur)
+	{
+		free(map->textur);
+		map->textur = NULL;
+	}
+	map->height = 0;
+	map->width = 0;
 }
 
 void	free_textures(t_game *game)

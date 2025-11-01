@@ -6,10 +6,9 @@
 /*   By: bsalim <bsalim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 00:16:42 by bsalim            #+#    #+#             */
-/*   Updated: 2025/10/27 00:16:43 by bsalim           ###   ########.fr       */
+/*   Updated: 2025/11/01 10:09:09 by bsalim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "../cub3d.h"
 
@@ -69,35 +68,29 @@ int	load_east_texture(t_game *game)
 	return (1);
 }
 
-int	init_textures(t_game *game)
+int	load_punch_texture(t_game *game)
 {
-	if (load_north_texture(game) != 1)
-		return (0);
-	if (load_south_texture(game) != 1)
-		return (0);
-	if (load_west_texture(game) != 1)
-		return (0);
-	if (load_east_texture(game) != 1)
-		return (0);
+	int	i;
+
 	game->gun_textures[0].img = mlx_xpm_file_to_image(game->mlx_data->mlx,
 			"pics/gun0.xpm", &game->gun_textures[0].width,
 			&game->gun_textures[0].height);
 	game->gun_textures[1].img = mlx_xpm_file_to_image(game->mlx_data->mlx,
 			"pics/gun1.xpm", &game->gun_textures[1].width,
 			&game->gun_textures[1].height);
-	game->gun_textures[2].img = mlx_xpm_file_to_image(game->mlx_data->mlx,
-			"pics/gun2.xpm", &game->gun_textures[2].width,
-			&game->gun_textures[2].height);
+	game->gun_textures[2].img = mlx_xpm_file_to_image(game->mlx_data->mlx, 
+			"pics/gun2.xpm",
+			&game->gun_textures[2].width, &game->gun_textures[2].height);
 	game->gun_textures[3].img = mlx_xpm_file_to_image(game->mlx_data->mlx,
 			"pics/gun3.xpm", &game->gun_textures[3].width,
 			&game->gun_textures[3].height);
-	int i = 0;
+	i = 0;
 	while (i < 4)
 	{
 		if (game->gun_textures[i].img)
-			game->gun_textures[i].addr_mem
-				= mlx_get_data_addr(game->gun_textures[i].img,
-					&game->gun_textures[i].bpp, &game->gun_textures[i].len_line,
+			game->gun_textures[i].addr_mem = mlx_get_data_addr(
+					game->gun_textures[i].img, &game->gun_textures[i].bpp,
+					&game->gun_textures[i].len_line,
 					&game->gun_textures[i].endian);
 		i++;
 	}

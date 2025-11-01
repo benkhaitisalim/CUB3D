@@ -3,25 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bsalim <bsalim@student.42.fr>              +#+  +:+       +#+        */
+/*   By: taya <taya@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/27 00:18:12 by bsalim            #+#    #+#             */
-/*   Updated: 2025/10/27 00:18:13 by bsalim           ###   ########.fr       */
+/*   Created: 2025/10/27 00:15:15 by bsalim            #+#    #+#             */
+/*   Updated: 2025/10/31 01:41:16 by taya             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "../cub3d.h"
 #include "parse.h"
 
 int	set_color_if_match(t_map *map, char *line, int i)
 {
-	if (ft_strncmp(line + i, "f ", 2) == 0 || ft_strncmp(line + i, "F ", 2) == 0)
+	if (ft_strncmp(line + i, "f ", 2) == 0 || ft_strncmp(line + i, "F ", 2) == 0
+		|| ft_strnstr(line + i, "Floor ", 7) != NULL)
 	{
 		map->count_color++;
 		return (find_color_and_parse_them(map, line, 'F'));
 	}
-	else if (ft_strncmp(line + i, "c ", 2) == 0 || ft_strncmp(line + i, "C ", 2) == 0)
+	if (ft_strncmp(line + i, "c ", 2) == 0 || ft_strncmp(line + i, "C ", 2) == 0
+		|| ft_strnstr(line + i, "Ceilling ", 7) != NULL)
 	{
 		map->count_color++;
 		return (find_color_and_parse_them(map, line, 'C'));
@@ -48,7 +49,7 @@ int	drain_after_map(int fd)
 	return (0);
 }
 
-int	process_map_row(t_map *map, char *line, int *capacity, int *row)
+int	process_map(t_map *map, char *line, int *capacity, int *row)
 {
 	t_var1	variable;
 
@@ -97,6 +98,9 @@ static int	handle_header_line(t_map *map, char *line, int i, int *before_map)
 
 int	parse_split(t_map *map, int *capacity, int *row, t_var *variable)
 {
+	int	s;
+
+	s = 0;
 	if (variable->before_map)
 	{
 		if (handle_header_line(map, variable->line, variable->i,
@@ -107,21 +111,15 @@ int	parse_split(t_map *map, int *capacity, int *row, t_var *variable)
 		}
 		if (!variable->before_map)
 		{
-			int s = skip_space(variable->line);
+			s = skip_space(variable->line);
 			if (variable->line[s] != '\0')
 			{
-				if (process_map_row(map, variable->line, capacity, row) != 0)
-				{
-					free(variable->line);
-					return (1);
-				}
+				if (process_map(map, variable->line, capacity, row) != 0)
+					return (free(variable->line), 1);
 			}
 		}
 	}
-	else if (process_map_row(map, variable->line, capacity, row) != 0)
-	{
-		free(variable->line);
-		return (1);
-	}
+	else if (process_map(map, variable->line, capacity, row) != 0)
+		return (free(variable->line), 1);
 	return (0);
 }

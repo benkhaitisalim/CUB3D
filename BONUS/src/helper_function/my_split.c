@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   my_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bsalim <bsalim@student.42.fr>              +#+  +:+       +#+        */
+/*   By: taya <taya@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 00:19:17 by bsalim            #+#    #+#             */
-/*   Updated: 2025/10/31 22:50:21 by bsalim           ###   ########.fr       */
+/*   Updated: 2025/11/01 16:34:57 by taya             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ void	init_var_split(t_var4 *var, char *input)
 void	find_size_word(char *input, t_var4 *var)
 {
 	var->index = 0;
-	while (input[var->i + var->index]
-		&& !ft_isspace(input[var->i + var->index]))
+	while (input[var->i + var->index] && !ft_isspace(input[var->i
+				+ var->index]))
 		var->index++;
 	var->tmp[var->word] = malloc(sizeof(char) * (var->index + 1));
 	if (!var->tmp)

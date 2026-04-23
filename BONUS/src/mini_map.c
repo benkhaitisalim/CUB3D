@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bsalim <bsalim@student.42.fr>              +#+  +:+       +#+        */
+/*   By: taya <taya@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/31 22:55:23 by bsalim            #+#    #+#             */
-/*   Updated: 2025/10/31 22:55:28 by bsalim           ###   ########.fr       */
+/*   Created: 2025/11/01 16:38:53 by taya              #+#    #+#             */
+/*   Updated: 2025/11/01 16:38:57 by taya             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,7 @@ void	draw_player_centered(t_game *game)
 		px = 0;
 		while (px < TILE_SIZE)
 		{
-			put_pixel_to_image(game->img,
-				center_x - (TILE_SIZE / 2) + px,
+			put_pixel_to_image(game->img, center_x - (TILE_SIZE / 2) + px,
 				center_y - (TILE_SIZE / 2) + py, 0xFF0000);
 			px++;
 		}

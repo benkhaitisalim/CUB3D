@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   coord.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bsalim <bsalim@student.42.fr>              +#+  +:+       +#+        */
+/*   By: taya <taya@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 00:39:43 by taya              #+#    #+#             */
-/*   Updated: 2025/10/31 22:19:27 by bsalim           ###   ########.fr       */
+/*   Updated: 2025/11/01 16:13:54 by taya             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,10 +109,10 @@ int	init_player(t_player *player, t_map *map, t_mlx_data *data)
 		return (1);
 	if (!find_player_direction(map->map_data, &player->dir_x, &player->dir_y))
 		return (2);
-	set_camera_plane(player->dir_x, player->dir_y, &player->plane_x,
-		&player->plane_y);
-	data->win = mlx_new_window(data->mlx,
-			SCREEN_WIDTH, SCREEN_HEIGHT, "Cube3D");
+	set_camera_plane(player->dir_x, player->dir_y,
+		&player->plane_x, &player->plane_y);
+	data->win = mlx_new_window(data->mlx, SCREEN_WIDTH,
+			SCREEN_HEIGHT, "Cube3D - Treasure Hunt");
 	if (!data->win)
 		return (1);
 	return (0);

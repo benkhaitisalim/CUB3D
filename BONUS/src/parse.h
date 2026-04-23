@@ -6,7 +6,7 @@
 /*   By: bsalim <bsalim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 11:41:41 by bsalim            #+#    #+#             */
-/*   Updated: 2025/10/31 22:30:53 by bsalim           ###   ########.fr       */
+/*   Updated: 2025/11/05 16:38:07 by bsalim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ typedef struct s_var
 	int					i;
 	int					before_map;
 }						t_var;
-
 typedef struct s_var1
 {
 	int					valid;
@@ -68,6 +67,15 @@ typedef struct s_var5
 	int					px;
 	char				c;
 }						t_var5;
+
+typedef struct s_var6
+{
+	int					j;
+	int					s;
+	int					len;
+	int					idx;
+	int					flag;
+}						t_var6;
 
 char					*found_the_parse_value(char *line);
 char					**my_split(char *input);

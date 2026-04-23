@@ -6,11 +6,11 @@
 /*   By: bsalim <bsalim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 00:16:14 by bsalim            #+#    #+#             */
-/*   Updated: 2025/10/31 22:10:32 by bsalim           ###   ########.fr       */
+/*   Updated: 2025/11/08 16:57:38 by bsalim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
+#include "../../cub3d.h"
 
 int	skip_space(char *line)
 {
@@ -59,7 +59,7 @@ void	*xrealloc(void *ptr, size_t new_count, size_t elem)
 int	is_map_char(char c)
 {
 	return (c == '0' || c == '1' || c == 'N' || c == 'S' || c == 'E' || c == 'W'
-		|| c == 'K' || c == 'D' || c == 'U');
+		|| c == 'K' || c == 'U');
 }
 
 int	is_player_char(char c)

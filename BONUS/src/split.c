@@ -6,7 +6,7 @@
 /*   By: bsalim <bsalim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 00:15:40 by bsalim            #+#    #+#             */
-/*   Updated: 2025/10/31 22:30:34 by bsalim           ###   ########.fr       */
+/*   Updated: 2025/11/08 20:36:21 by bsalim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	parse_floor_color(t_var3 *var, char c, t_map *store)
 {
 	if (c == 'F')
 	{
-		if (!var->tmp[0] || !var->tmp[1] || !var->tmp[2])
+		if (!var->tmp[0] || !var->tmp[1] || !var->tmp[2] || var->tmp[3])
 			return (1);
 		if (!is_valid_number(var->tmp[0]) || !is_valid_number(var->tmp[1])
 			|| !is_valid_number(var->tmp[2]))
@@ -52,6 +52,9 @@ int	parse_floor_color(t_var3 *var, char c, t_map *store)
 		free(var->tmp[0]);
 		free(var->tmp[1]);
 		free(var->tmp[2]);
+		var->tmp[0] = NULL;
+		var->tmp[1] = NULL;
+		var->tmp[2] = NULL;
 	}
 	return (0);
 }
@@ -60,7 +63,7 @@ int	parse_celing_color(t_var3 *var, char c, t_map *store)
 {
 	if (c == 'C')
 	{
-		if (!var->tmp[0] || !var->tmp[1] || !var->tmp[2])
+		if (!var->tmp[0] || !var->tmp[1] || !var->tmp[2] || var->tmp[3])
 			return (1);
 		if (!is_valid_number(var->tmp[0]) || !is_valid_number(var->tmp[1])
 			|| !is_valid_number(var->tmp[2]))
@@ -74,6 +77,9 @@ int	parse_celing_color(t_var3 *var, char c, t_map *store)
 		free(var->tmp[0]);
 		free(var->tmp[1]);
 		free(var->tmp[2]);
+		var->tmp[0] = NULL;
+		var->tmp[1] = NULL;
+		var->tmp[2] = NULL;
 	}
 	return (0);
 }
@@ -81,8 +87,12 @@ int	parse_celing_color(t_var3 *var, char c, t_map *store)
 int	to_the_next_word(char *line, t_var3 *var)
 {
 	var->index = 0;
+	if (line[var->i + var->index] == '-')
+		var->index++;
 	while (line[var->i + var->index] && ft_isdigit(line[var->i + var->index]))
 		var->index++;
+	if (var->index == 0)
+		return (0);
 	var->fill = 0;
 	var->tmp[var->color] = malloc(sizeof(char) * (var->index + 1));
 	if (!var->tmp[var->color])
@@ -93,8 +103,8 @@ int	to_the_next_word(char *line, t_var3 *var)
 		var->fill++;
 	}
 	var->tmp[var->color][var->fill] = '\0';
-	while (line[var->i + var->index] && ft_isspace(line[var->i + var->index])
-		&& (line[var->i + var->index] != ','))
+	while (line[var->i + var->index] && (ft_isspace(line[var->i + var->index])
+			|| (line[var->i + var->index] != ',')))
 		var->index++;
 	var->color++;
 	return (var->index);

@@ -6,7 +6,7 @@
 /*   By: bsalim <bsalim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 00:15:04 by bsalim            #+#    #+#             */
-/*   Updated: 2025/10/31 22:15:47 by bsalim           ###   ########.fr       */
+/*   Updated: 2025/11/06 15:18:24 by bsalim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ int	init_map(t_map *map)
 	map->we_textures = NULL;
 	map->so_textures = NULL;
 	map->no_textures = NULL;
-	map->base_dir = NULL;
 	map->player = NULL;
 	map->map_data = NULL;
 	map->height = 0;

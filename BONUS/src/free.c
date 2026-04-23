@@ -6,11 +6,25 @@
 /*   By: bsalim <bsalim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 00:18:52 by bsalim            #+#    #+#             */
-/*   Updated: 2025/10/31 22:31:56 by bsalim           ###   ########.fr       */
+/*   Updated: 2025/11/08 21:33:08 by bsalim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
+
+void	cleanup_map_resources(t_map *map)
+{
+	if (map->map_data)
+		free_double_arr(map->map_data);
+	if (map->no_textures)
+		free(map->no_textures);
+	if (map->so_textures)
+		free(map->so_textures);
+	if (map->we_textures)
+		free(map->we_textures);
+	if (map->ea_textures)
+		free(map->ea_textures);
+}
 
 void	free_double_arr(char **arr)
 {
@@ -25,29 +39,6 @@ void	free_double_arr(char **arr)
 		i++;
 	}
 	free(arr);
-}
-
-void	free_map_data(t_map *map)
-{
-	if (!map)
-		return ;
-	free_double_arr(map->map_data);
-	map->map_data = NULL;
-	free(map->no_textures);
-	free(map->so_textures);
-	free(map->we_textures);
-	free(map->ea_textures);
-	map->no_textures = NULL;
-	map->so_textures = NULL;
-	map->we_textures = NULL;
-	map->ea_textures = NULL;
-	if (map->textur)
-	{
-		free(map->textur);
-		map->textur = NULL;
-	}
-	map->height = 0;
-	map->width = 0;
 }
 
 void	free_textures(t_game *game)
@@ -89,7 +80,6 @@ void	cleanup_game(t_game *game, t_player *player, t_img *img, t_map *map)
 		free(map->so_textures);
 		free(map->we_textures);
 		free(map->ea_textures);
-		free(map->base_dir);
 	}
 	free(game);
 	free(player);

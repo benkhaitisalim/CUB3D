@@ -6,7 +6,7 @@
 /*   By: bsalim <bsalim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 18:50:07 by bsalim            #+#    #+#             */
-/*   Updated: 2025/10/31 22:32:18 by bsalim           ###   ########.fr       */
+/*   Updated: 2025/11/05 15:30:44 by bsalim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,6 @@ int	find_color_and_parse_them(t_map *map, char *line, char c)
 
 	skip = skip_name_color(line);
 	if (ft_split_number(map, line + skip, c) != 0)
-	{
-		printf("error : color value KO\n");
 		return (1);
-	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: bsalim <bsalim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 00:18:06 by bsalim            #+#    #+#             */
-/*   Updated: 2025/10/31 22:15:06 by bsalim           ###   ########.fr       */
+/*   Updated: 2025/11/07 17:37:52 by bsalim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ typedef struct s_var3
 	int					color;
 	int					fill;
 	int					index;
+	int					index_error;
 }						t_var3;
 
 typedef struct s_var4
@@ -59,6 +60,15 @@ typedef struct s_var4
 	int					fill;
 }						t_var4;
 
+typedef struct s_var6
+{
+	int					j;
+	int					s;
+	int					len;
+	int					idx;
+	int					flag;
+}						t_var6;
+
 char					*found_the_parse_value(char *line);
 char					**my_split(char *input);
 int						parse_map(t_map *map, int fd);
@@ -70,7 +80,7 @@ int						remove_new_line(char *line);
 int						set_texture_if_match(t_map *map, char *line, int i);
 int						set_color_if_match(t_map *map, char *line, int i);
 int						drain_after_map(int fd);
-int						process_map_row(t_map *map, char *line, int *capacity,
+int						process_map(t_map *map, char *line, int *capacity,
 							int *row);
 int						process_file_lines(t_map *map, int fd, int *capacity,
 							int *row);

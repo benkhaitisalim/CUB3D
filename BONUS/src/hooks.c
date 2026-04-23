@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: bsalim <bsalim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/31 23:06:41 by bsalim            #+#    #+#             */
-/*   Updated: 2025/11/01 10:15:01 by bsalim           ###   ########.fr       */
+/*   Created: 2025/11/01 16:24:17 by taya              #+#    #+#             */
+/*   Updated: 2025/11/05 17:00:15 by bsalim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,18 +53,11 @@ int	key_release(int keycode, t_game *game)
 	return (0);
 }
 
-int	mouse_move(int x, int y, t_game *game)
+void	check_delta_x(int x, t_game *game)
 {
 	int	delta_x;
 	int	i;
 
-	(void)y;
-	if (!game->keys.mouse_locked)
-	{
-		game->keys.mouse_x = x;
-		game->keys.mouse_locked = 1;
-		return (0);
-	}
 	delta_x = x - game->keys.mouse_x;
 	if (delta_x > 0)
 	{
@@ -80,12 +73,24 @@ int	mouse_move(int x, int y, t_game *game)
 	}
 	if (delta_x != 0)
 		draw_3d(game);
+}
+
+int	mouse_move(int x, int y, t_game *game)
+{
+	(void)y;
+	if (!game->keys.mouse_locked)
+	{
+		game->keys.mouse_x = x;
+		game->keys.mouse_locked = 1;
+		return (0);
+	}
+	check_delta_x(x, game);
 	game->keys.mouse_x = x;
 	if (x < 10 || x > SCREEN_WIDTH - 10)
 	{
-		mlx_mouse_move(game->mlx_data->win,
-			SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
-		game->keys.mouse_x = SCREEN_WIDTH / 2;
+		mlx_mouse_move(game->mlx_data->win, SCREEN_WIDTH / 2,
+			SCREEN_HEIGHT / 2);
+		game->keys.mouse_x = SCREEN_WIDTH / 10;
 	}
 	return (0);
 }

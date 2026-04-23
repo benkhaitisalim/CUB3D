@@ -6,7 +6,7 @@
 /*   By: bsalim <bsalim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 00:14:30 by bsalim            #+#    #+#             */
-/*   Updated: 2025/10/27 00:14:31 by bsalim           ###   ########.fr       */
+/*   Updated: 2025/11/08 20:42:13 by bsalim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ void	free_double_arr(char **arr)
 {
 	int	j;
 
+	if (!arr)
+		return ;
 	j = 0;
 	while (arr[j])
 	{
@@ -37,6 +39,20 @@ void	free_textures(t_game *game)
 		mlx_destroy_image(game->mlx_data->mlx, game->east_texture.img);
 }
 
+void	cleanup_map_resources(t_map *map)
+{
+	if (map->map_data)
+		free_double_arr(map->map_data);
+	if (map->no_textures)
+		free(map->no_textures);
+	if (map->so_textures)
+		free(map->so_textures);
+	if (map->we_textures)
+		free(map->we_textures);
+	if (map->ea_textures)
+		free(map->ea_textures);
+}
+
 void	cleanup_game(t_game *game, t_player *player, t_img *img, t_map *map)
 {
 	if (game && game->map && game->map->map_data)
@@ -48,7 +64,24 @@ void	cleanup_game(t_game *game, t_player *player, t_img *img, t_map *map)
 		free(map->so_textures);
 		free(map->we_textures);
 		free(map->ea_textures);
-		free(map->base_dir);
+	}
+	free(game);
+	free(player);
+	free(img);
+	free(map);
+}
+
+void	free_befor_run_the_game(t_game *game, t_map *map
+	, t_player *player, void *img)
+{
+	if (game && game->map && game->map->map_data)
+		free_double_arr(game->map->map_data);
+	if (map)
+	{
+		free(map->no_textures);
+		free(map->so_textures);
+		free(map->we_textures);
+		free(map->ea_textures);
 	}
 	free(game);
 	free(player);

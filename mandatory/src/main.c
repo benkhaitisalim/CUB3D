@@ -6,26 +6,18 @@
 /*   By: bsalim <bsalim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 00:15:50 by bsalim            #+#    #+#             */
-/*   Updated: 2025/10/31 22:15:39 by bsalim           ###   ########.fr       */
+/*   Updated: 2025/11/08 21:29:50 by bsalim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-int	init_game_textures(t_game *game)
+void	run_the_game(t_mlx_data *data, t_game *game)
 {
-	if (!init_textures(game))
-	{
-		ft_putstr_fd("Error: Failed to load textures\n", 2);
-		return (1);
-	}
-	return (0);
-}
-
-int	error(char *msg)
-{
-	printf("Error: %s\n", msg);
-	return (1);
+	init_keys(game);
+	mlx_hooks_setup(game);
+	draw_3d(game);
+	mlx_loop(data->mlx);
 }
 
 int	main(int ac, char **av)
@@ -46,13 +38,13 @@ int	main(int ac, char **av)
 		return (1);
 	game = setup_game(&data, map, player, img);
 	if (!game)
-		return (error("Failed to allocate game structure"));
+		return (error("Failed to allocate game structure"), 1);
 	if (init_game_textures(game) != 0)
+	{
+		free_befor_run_the_game(game, map, player, img);
 		return (1);
-	init_keys(game);
-	mlx_hooks_setup(game);
-	draw_3d(game);
-	mlx_loop(data.mlx);
+	}
+	run_the_game(&data, game);
 	cleanup_game(game, player, img, map);
 	return (0);
 }

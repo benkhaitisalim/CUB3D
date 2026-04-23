@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taya <taya@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: bsalim <bsalim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 00:15:15 by bsalim            #+#    #+#             */
-/*   Updated: 2025/10/31 01:41:16 by taya             ###   ########.fr       */
+/*   Updated: 2025/11/07 16:10:09 by bsalim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,25 +51,25 @@ int	drain_after_map(int fd)
 
 int	process_map(t_map *map, char *line, int *capacity, int *row)
 {
-	t_var1	variable;
+	t_var1	var;
 
-	variable.valid = 1;
-	variable.ci = 0;
-	variable.skip = skip_space(line);
-	while (line[variable.ci + variable.skip])
+	var.valid = 1;
+	var.ci = 0;
+	var.skip = skip_space(line);
+	while (line[var.ci + var.skip])
 	{
-		if (!is_map_char(line[variable.ci + variable.skip])
-			&& !ft_isspace(line[variable.ci + variable.skip]))
+		if (!is_map_char(line[var.ci + var.skip]) && !ft_isspace(line[var.ci
+					+ var.skip]))
 		{
-			variable.valid = 0;
+			var.valid = 0;
 			break ;
 		}
-		variable.ci++;
+		var.ci++;
 	}
-	if (!variable.valid)
+	if (!var.valid)
 		return (1);
-	allocate_map(map, variable, row, capacity);
-	map->map_data[*row] = ft_strtrim(line, " \t");
+	allocate_map(map, var, row, capacity);
+	map->map_data[*row] = ft_strdup(line);
 	if (!map->map_data[*row])
 		return (1);
 	if ((int)ft_strlen(line) > map->width)
@@ -82,12 +82,8 @@ static int	handle_header_line(t_map *map, char *line, int i, int *before_map)
 {
 	if (set_texture_if_match(map, line, i) == 0)
 		return (0);
-	if (set_texture_if_match(map, line, i) == 1)
-		return (1);
 	if (set_color_if_match(map, line, i) == 0)
 		return (0);
-	if (set_color_if_match(map, line, i) == 1)
-		return (1);
 	if (!check_diagonal(line))
 	{
 		*before_map = 0;

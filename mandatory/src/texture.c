@@ -6,7 +6,7 @@
 /*   By: bsalim <bsalim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 00:15:36 by bsalim            #+#    #+#             */
-/*   Updated: 2025/10/27 00:15:37 by bsalim           ###   ########.fr       */
+/*   Updated: 2025/11/08 16:47:32 by bsalim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,7 @@ int	load_west_texture(t_game *game)
 			game->map->we_textures,
 			&game->west_texture.width, &game->west_texture.height);
 	if (!game->west_texture.img)
-	{
 		return (0);
-	}
 	game->west_texture.addr_mem = mlx_get_data_addr(game->west_texture.img,
 			&game->west_texture.bpp,
 			&game->west_texture.len_line, &game->west_texture.endian);
@@ -73,10 +71,22 @@ int	init_textures(t_game *game)
 	if (load_north_texture(game) != 1)
 		return (0);
 	if (load_south_texture(game) != 1)
+	{
+		mlx_destroy_image(game->mlx_data->mlx, game->north_texture.img);
 		return (0);
+	}
 	if (load_west_texture(game) != 1)
+	{
+		mlx_destroy_image(game->mlx_data->mlx, game->north_texture.img);
+		mlx_destroy_image(game->mlx_data->mlx, game->south_texture.img);
 		return (0);
+	}
 	if (load_east_texture(game) != 1)
+	{
+		mlx_destroy_image(game->mlx_data->mlx, game->north_texture.img);
+		mlx_destroy_image(game->mlx_data->mlx, game->south_texture.img);
+		mlx_destroy_image(game->mlx_data->mlx, game->west_texture.img);
 		return (0);
+	}
 	return (1);
 }

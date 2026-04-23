@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_structs.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bsalim <bsalim@student.42.fr>              +#+  +:+       +#+        */
+/*   By: taya <taya@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 00:18:30 by bsalim            #+#    #+#             */
-/*   Updated: 2025/11/01 10:19:36 by bsalim           ###   ########.fr       */
+/*   Updated: 2025/11/01 16:41:46 by taya             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,30 +48,25 @@ void	init_keys(t_game *game)
 	game->keys.mouse_locked = 0;
 }
 
-void	init_game_color(t_map *map)
-{
-	map->flor.r = -1;
-	map->flor.g = -1;
-	map->flor.b = -1;
-	map->celing.r = -1;
-	map->celing.g = -1;
-	map->celing.b = -1;
-}
-
 int	init_map(t_map *map)
 {
 	if (!map)
 		return (1);
+	map->map_data = NULL;
 	map->height = 0;
 	map->width = 0;
-	map->map_data = NULL;
-	init_game_color(map);
 	map->no_textures = NULL;
 	map->so_textures = NULL;
 	map->we_textures = NULL;
 	map->ea_textures = NULL;
 	map->player = NULL;
 	map->texture_count = 0;
+	map->flor.r = -1;
+	map->flor.g = -1;
+	map->flor.b = -1;
+	map->celing.r = -1;
+	map->celing.g = -1;
+	map->celing.b = -1;
 	map->textur = NULL;
 	map->count.no = 0;
 	map->count.so = 0;
@@ -79,8 +74,7 @@ int	init_map(t_map *map)
 	map->count.ea = 0;
 	map->count.f = 0;
 	map->count.c = 0;
-	map->count_color = 0;
-	return (0);
+	return (map->count_color = 0, 0);
 }
 
 void	init_player_var(t_player *player)

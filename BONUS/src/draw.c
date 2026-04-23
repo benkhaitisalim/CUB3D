@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bsalim <bsalim@student.42.fr>              +#+  +:+       +#+        */
+/*   By: taya <taya@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 15:34:15 by taya              #+#    #+#             */
-/*   Updated: 2025/11/01 10:14:09 by bsalim           ###   ########.fr       */
+/*   Updated: 2025/11/01 17:39:16 by taya             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,22 @@ void	draw_floor_ceiling(t_game *game)
 		}
 		y++;
 	}
+}
+
+void	wall_height(t_game *game, t_ray *ray)
+{
+	ray->line_height = (int)(SCREEN_HEIGHT / ray->perp_wall_dist);
+	ray->draw_start = -ray->line_height / 2 + SCREEN_HEIGHT / 2;
+	if (ray->draw_start < 0)
+		ray->draw_start = 0;
+	ray->draw_end = ray->line_height / 2 + SCREEN_HEIGHT / 2;
+	if (ray->draw_end >= SCREEN_HEIGHT)
+		ray->draw_end = SCREEN_HEIGHT - 1;
+	if (ray->side == 0)
+		ray->wall_x = game->player->pos_y + ray->perp_wall_dist * ray->dir_y;
+	else
+		ray->wall_x = game->player->pos_x + ray->perp_wall_dist * ray->dir_x;
+	ray->wall_x -= floor(ray->wall_x);
 }
 
 void	draw_walls(t_game *game)

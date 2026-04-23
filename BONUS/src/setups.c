@@ -6,7 +6,7 @@
 /*   By: bsalim <bsalim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 00:17:54 by bsalim            #+#    #+#             */
-/*   Updated: 2025/10/31 22:30:40 by bsalim           ###   ########.fr       */
+/*   Updated: 2025/11/07 22:46:51 by bsalim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ int	setup_map(t_map **map, char *filename)
 		free(*map);
 		return (1);
 	}
-	printf("Parsing Map it Good :) \n");
 	return (0);
 }
 
@@ -36,7 +35,7 @@ int	setup_player(t_player **player, t_map *map, t_mlx_data *data)
 
 	*player = malloc(sizeof(t_player));
 	if (!*player)
-		return (error("Failed to allocate player"));
+		return (error("Failed to allocate player"), 1);
 	result = init_player(*player, map, data);
 	if (result == 2)
 	{
@@ -44,6 +43,7 @@ int	setup_player(t_player **player, t_map *map, t_mlx_data *data)
 			error("Player not found");
 		else
 			error("Player direction not found");
+		return (1);
 	}
 	return (0);
 }

@@ -6,11 +6,11 @@
 /*   By: bsalim <bsalim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 00:19:19 by bsalim            #+#    #+#             */
-/*   Updated: 2025/10/31 22:50:16 by bsalim           ###   ########.fr       */
+/*   Updated: 2025/11/04 19:19:29 by bsalim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
+#include "../../cub3d.h"
 
 int	skip_space(char *line)
 {

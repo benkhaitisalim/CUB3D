@@ -6,41 +6,12 @@
 /*   By: bsalim <bsalim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 00:15:11 by bsalim            #+#    #+#             */
-/*   Updated: 2025/10/31 22:33:21 by bsalim           ###   ########.fr       */
+/*   Updated: 2025/11/06 10:47:04 by bsalim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 #include "parse.h"
-
-char	*derive_base_dir(const char *av)
-{
-	char	*pos;
-	size_t	len;
-	char	*base;
-
-	if (!av)
-		return (ft_strdup("."));
-	pos = ft_strnstr(av, "/maps/", ft_strlen(av));
-	if (pos)
-	{
-		len = (size_t)(pos - av);
-		return (ft_substr(av, 0, len));
-	}
-	len = ft_strlen(av);
-	while (len > 0 && av[len - 1] != '/')
-		len--;
-	if (len == 0)
-		return (ft_strdup("."));
-	base = ft_substr(av, 0, len - 1);
-	if (!base || base[0] == '\0')
-	{
-		if (base)
-			free(base);
-		return (ft_strdup("."));
-	}
-	return (base);
-}
 
 static int	finalize_map(t_map *map, int row)
 {
